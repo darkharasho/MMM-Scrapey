@@ -1,0 +1,4 @@
+node_modules
+.vscode
+package-lock.json
+MMM-Scrapey.code-workspace
