@@ -11,13 +11,11 @@ module.exports = NodeHelper.create({
 
     socketNotificationReceived: function (notification, payload) {
         if (notification === "FETCH_SCRAPE_DATA") {
-            console.log("Fetching from: " + payload.url); // Log the URL
-            console.log("Using CSS selector: " + payload.cssSelector); // Log the CSS selector
-            this.fetchData(payload.url, payload.cssSelector);
+            this.fetchData(payload.url, payload.cssSelector, payload.instanceId);
         }
     },
 
-    fetchData: function (scrapeURL, cssSelector) {
+    fetchData: function (scrapeURL, cssSelector, instanceId) {
         fetch(scrapeURL)
             .then((response) => response.text())
             .then((body) => {
@@ -26,16 +24,20 @@ module.exports = NodeHelper.create({
 
                 if (!scrapedData) {
                     console.error(cssSelector + " not found in HTML.");
-                    // Handle the case where the selector doesn't match anything
-                    return [["Scrape target not found"]];
+                    this.sendSocketNotification("SCRAPE_DATA", {
+                        instanceId: instanceId,
+                        data: [["Scrape target not found"]]
+                    });
+                    return;
                 }
 
-                console.log(scrapedData); // Log the scraped data
-                this.sendSocketNotification("SCRAPE_DATA", scrapedData);
+                this.sendSocketNotification("SCRAPE_DATA", {
+                    instanceId: instanceId,
+                    data: scrapedData
+                });
             })
             .catch((error) => {
                 console.error("Error fetching data: ", error);
             });
     }
 });
-
