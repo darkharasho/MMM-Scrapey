@@ -1,6 +1,8 @@
 # MMM-Scrapey
 
-Module for MagicMirror, to scrape content from any table on a webpage
+Module for [MagicMirror²](https://github.com/MichMich/MagicMirror/), to scrape content from any table on a webpage, choose which rows and columns you want, and how often you want to refresh the display on your mirror.
+
+![Alt text](/img/demo.png "A preview of the MMM-S crapeyg module.")
 
 ## Installing
 
