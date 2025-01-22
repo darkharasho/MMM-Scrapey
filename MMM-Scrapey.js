@@ -9,6 +9,7 @@ Module.register("MMM-Scrapey", {
         tableColumns: [1,2,3], // Specify which columns to display (1-based index)
         tableRows: [], // Specify which rows to display (1-based index), leave empty to show all
         showTableHeader: true, // Toggle header row formatting
+        plainText: false, // If true, ignore any HTML formatting and just display the text
         title: "Scrapey Data" // Default header text
     },
 
@@ -85,7 +86,11 @@ Module.register("MMM-Scrapey", {
                         var cell = row.cells[colIndex - 1];
                         if (cell) {
                             var newCell = newRow.insertCell();
-                            newCell.innerHTML = cell.innerHTML;
+                            if (this.config.plainText) {
+                                newCell.innerHTML = cell.innerText;
+                            } else  {
+                                newCell.innerHTML = cell.innerHTML;
+                            }
                         }
                     });
                 }

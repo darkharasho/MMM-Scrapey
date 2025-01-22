@@ -29,6 +29,7 @@ Add this configuration into `config.js` file's
         tableColumns: [1,3,4], // Specify which columns to display (1-based index)
         tableRows: [1,2,3], // Specify which rows to display (1-based index), leave empty to show all
         showTableHeader: true, // Toggle formatting the first row as a table header
+        plainText: true // Strip out any extra HTML and just keep the plain text content
     }
 },
 ```
