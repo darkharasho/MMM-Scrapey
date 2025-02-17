@@ -1,5 +1,6 @@
 const NodeHelper = require("node_helper");
 const https = require("https");
+const fetch = require("node-fetch");
 const cheerio = require("cheerio");
 
 console.log("MMM-Scrapey node helper is starting...");
