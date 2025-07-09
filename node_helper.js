@@ -2,8 +2,6 @@ const NodeHelper = require("node_helper");
 const https = require("https");
 const cheerio = require("cheerio");
 
-console.log("MMM-Scrapey node helper is starting...");
-
 module.exports = NodeHelper.create({
     start: function () {
         console.log("Starting node helper for module: " + this.name);
@@ -23,7 +21,7 @@ module.exports = NodeHelper.create({
                 const scrapedData = $(cssSelector).html();
 
                 if (!scrapedData) {
-                    console.error(cssSelector + " not found in HTML.");
+                    console.error("[MMM-Scrapey] '" + cssSelector + "' not found in HTML.");
                     this.sendSocketNotification("SCRAPE_DATA", {
                         instanceId: instanceId,
                         data: [["Scrape target not found"]]
@@ -37,7 +35,7 @@ module.exports = NodeHelper.create({
                 });
             })
             .catch((error) => {
-                console.error("Error fetching data: ", error);
+                console.error("[MMM-Scrapey] Error fetching data: ", error);
             });
     }
 });
