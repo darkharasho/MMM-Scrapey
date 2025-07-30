@@ -12,7 +12,7 @@ module.exports = NodeHelper.create({
     socketNotificationReceived: function (notification, payload) {
         if (notification === "FETCH_SCRAPE_DATA") {
             if (payload.waitForSelector && puppeteer) {
-                this.fetchDataWithPuppeteer(payload.url, payload.cssSelector, payload.instanceId);
+                this.fetchDataWithPuppeteer(payload.url, payload.cssSelector, payload.instanceId, payload.browserPath);
             } else {
                 this.fetchData(payload.url, payload.cssSelector, payload.instanceId);
             }
@@ -45,9 +45,12 @@ module.exports = NodeHelper.create({
             });
     },
 
-    fetchDataWithPuppeteer: async function (scrapeURL, cssSelector, instanceId) {
+    fetchDataWithPuppeteer: async function (scrapeURL, cssSelector, instanceId, browserPath) {
         try {
-            const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
+            const browser = await puppeteer.launch({
+                args: ['--no-sandbox'],
+                executablePath: browserPath || '/usr/bin/chromium-browser'
+            });
             const page = await browser.newPage();
             await page.goto(scrapeURL, { waitUntil: 'networkidle2' });
             await page.waitForSelector(cssSelector, { timeout: 15000 });

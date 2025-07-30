@@ -11,7 +11,8 @@ Module.register("MMM-Scrapey", {
         showTableHeader: true, // Toggle header row formatting
         plainText: false, // If true, ignore any HTML formatting and just display the text
         title: "Scrapey Data", // Default header text
-        waitForSelector: false // Wait for selector to appear (for JS-loaded tables)
+        waitForSelector: false, // Wait for selector to appear (for JS-loaded tables)
+        browserPath: "/usr/bin/chromium-browser" // Default browser path for puppeteer
     },
 
     start: function () {
@@ -29,7 +30,8 @@ Module.register("MMM-Scrapey", {
             instanceId: this.instanceId,
             url: this.config.url,
             cssSelector: this.config.cssSelector,
-            waitForSelector: this.config.waitForSelector // Add this line
+            waitForSelector: this.config.waitForSelector,
+            browserPath: this.config.browserPath // Pass browser path
         });
     },
 
