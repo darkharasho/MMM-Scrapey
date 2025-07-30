@@ -1,6 +1,8 @@
 const NodeHelper = require("node_helper");
-const https = require("https");
 const cheerio = require("cheerio");
+const fetch = require("node-fetch");
+let puppeteer;
+try { puppeteer = require("puppeteer"); } catch (e) { puppeteer = null; }
 
 module.exports = NodeHelper.create({
     start: function () {
@@ -9,7 +11,11 @@ module.exports = NodeHelper.create({
 
     socketNotificationReceived: function (notification, payload) {
         if (notification === "FETCH_SCRAPE_DATA") {
-            this.fetchData(payload.url, payload.cssSelector, payload.instanceId);
+            if (payload.waitForSelector && puppeteer) {
+                this.fetchDataWithPuppeteer(payload.url, payload.cssSelector, payload.instanceId);
+            } else {
+                this.fetchData(payload.url, payload.cssSelector, payload.instanceId);
+            }
         }
     },
 
@@ -37,5 +43,27 @@ module.exports = NodeHelper.create({
             .catch((error) => {
                 console.error("[MMM-Scrapey] Error fetching data: ", error);
             });
+    },
+
+    fetchDataWithPuppeteer: async function (scrapeURL, cssSelector, instanceId) {
+        try {
+            const browser = await puppeteer.launch({ args: ['--no-sandbox'] });
+            const page = await browser.newPage();
+            await page.goto(scrapeURL, { waitUntil: 'networkidle2' });
+            await page.waitForSelector(cssSelector, { timeout: 15000 });
+            const scrapedData = await page.$eval(cssSelector, el => el.innerHTML);
+            await browser.close();
+
+            this.sendSocketNotification("SCRAPE_DATA", {
+                instanceId: instanceId,
+                data: scrapedData
+            });
+        } catch (error) {
+            console.error("[MMM-Scrapey] Puppeteer error: ", error);
+            this.sendSocketNotification("SCRAPE_DATA", {
+                instanceId: instanceId,
+                data: [["Scrape target not found (puppeteer error)"]]
+            });
+        }
     }
 });

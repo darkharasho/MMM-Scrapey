@@ -10,7 +10,8 @@ Module.register("MMM-Scrapey", {
         tableRows: [], // Specify which rows to display (1-based index), leave empty to show all
         showTableHeader: true, // Toggle header row formatting
         plainText: false, // If true, ignore any HTML formatting and just display the text
-        title: "Scrapey Data" // Default header text
+        title: "Scrapey Data", // Default header text
+        waitForSelector: false // Wait for selector to appear (for JS-loaded tables)
     },
 
     start: function () {
@@ -27,7 +28,8 @@ Module.register("MMM-Scrapey", {
         this.sendSocketNotification("FETCH_SCRAPE_DATA", {
             instanceId: this.instanceId,
             url: this.config.url,
-            cssSelector: this.config.cssSelector
+            cssSelector: this.config.cssSelector,
+            waitForSelector: this.config.waitForSelector // Add this line
         });
     },
 
