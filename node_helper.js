@@ -54,6 +54,9 @@ module.exports = NodeHelper.create({
             const page = await browser.newPage();
             await page.goto(scrapeURL, { waitUntil: 'networkidle2' });
             await page.waitForSelector(cssSelector, { timeout: 15000 });
+
+            console.info(`[MMM-Scrapey][INFO] Selector "${cssSelector}" appeared, starting scrape for instanceId: ${instanceId}`);
+
             const scrapedData = await page.$eval(cssSelector, el => el.innerHTML);
             await browser.close();
 
