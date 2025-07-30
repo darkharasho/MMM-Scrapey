@@ -54,8 +54,8 @@ Module.register("MMM-Scrapey", {
 
         if (table) {
             var filteredTable = document.createElement("table");
-            // Handle header if showHeader is true
-            if (this.config.showHeader) {
+            // Handle header if showTableHeader is true
+            if (this.config.showTableHeader) {
                 var thead = filteredTable.createTHead();
                 var headerRow = thead.insertRow();
                 var originalHeaderRow = table.tHead ? table.tHead.rows[0] : table.tBodies[0].rows[0];
