@@ -12,7 +12,8 @@ Module.register("MMM-Scrapey", {
         plainText: false, // If true, ignore any HTML formatting and just display the text
         title: "Scrapey Data", // Default header text
         waitForSelector: false, // Wait for selector to appear (for JS-loaded tables)
-        browserPath: "/usr/bin/chromium-browser" // Default browser path for puppeteer
+        browserPath: "/usr/bin/chromium-browser", // Default browser path for puppeteer
+        tableWidth: "100%" // <--- Add this line for width preset
     },
 
     start: function () {
@@ -54,6 +55,9 @@ Module.register("MMM-Scrapey", {
 
         if (table) {
             var filteredTable = document.createElement("table");
+            // Set table width from config
+            filteredTable.style.width = this.config.tableWidth;
+
             // Handle header if showTableHeader is true
             if (this.config.showTableHeader) {
                 var thead = filteredTable.createTHead();
