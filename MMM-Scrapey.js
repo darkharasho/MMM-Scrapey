@@ -10,7 +10,10 @@ Module.register("MMM-Scrapey", {
         tableRows: [], // Specify which rows to display (1-based index), leave empty to show all
         showTableHeader: true, // Toggle header row formatting
         plainText: false, // If true, ignore any HTML formatting and just display the text
-        title: "Scrapey Data" // Default header text
+        title: "Scrapey Data", // Default header text
+        waitForSelector: false, // Wait for selector to appear (for JS-loaded tables)
+        browserPath: "/usr/bin/chromium-browser", // Default browser path for puppeteer
+        tableWidth: "100%" // <--- Add this line for width preset
     },
 
     start: function () {
@@ -27,7 +30,9 @@ Module.register("MMM-Scrapey", {
         this.sendSocketNotification("FETCH_SCRAPE_DATA", {
             instanceId: this.instanceId,
             url: this.config.url,
-            cssSelector: this.config.cssSelector
+            cssSelector: this.config.cssSelector,
+            waitForSelector: this.config.waitForSelector,
+            browserPath: this.config.browserPath // Pass browser path
         });
     },
 
@@ -50,8 +55,11 @@ Module.register("MMM-Scrapey", {
 
         if (table) {
             var filteredTable = document.createElement("table");
-            // Handle header if showHeader is true
-            if (this.config.showHeader) {
+            // Set table width from config
+            filteredTable.style.width = this.config.tableWidth;
+
+            // Handle header if showTableHeader is true
+            if (this.config.showTableHeader) {
                 var thead = filteredTable.createTHead();
                 var headerRow = thead.insertRow();
                 var originalHeaderRow = table.tHead ? table.tHead.rows[0] : table.tBodies[0].rows[0];
