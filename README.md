@@ -75,23 +75,5 @@ npm install
 | `waitForSelector` | boolean   | false                          | Wait for selector (for JS-loaded tables, requires Puppeteer)                |
 | `browserPath`     | string    | "/usr/bin/chromium-browser"    | Path to Chromium/Chrome for Puppeteer                                       |
 | `tableWidth`      | string    | "100%"                         | CSS width for the table (e.g., "100%", "1200px")                            |
-| `brightText`      | boolean   | false                          | Use MagicMirror's bright text style for the table                           |
-
----
-
-For troubleshooting Puppeteer or browser issues, see [Puppeteer Troubleshooting](https://pptr.dev/troubleshooting).
-
----
-
-### Bright Text Example
-
-To enable brighter text for your table (for better visibility on dark backgrounds), add the following to your config:
-
-```js
-config: {
-    // ...other config...
-    brightText: true
-}
-```
-
-This will apply MagicMirror's standard `.bright` class to your table.
+| `brightText`      | boolean   | false                          | Use bright white text and subtle glow for the table                         |
+| `rowOpacity`      | number    | 0.92                           | Opacity for table rows (0.0–1.0, ignored if `brightText` is true)           |
