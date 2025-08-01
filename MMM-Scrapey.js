@@ -98,7 +98,7 @@ Module.register("MMM-Scrapey", {
                 if (row) {
                     var newRow = tbody.insertRow();
                     // Only add opacity class if brightText is false
-                    if (!this.config.brightText) {
+                    if (this.config.brightText) {
                         newRow.classList.add("scrapey-row");
                         newRow.style.opacity = this.config.rowOpacity; // Set opacity from config
                     }

@@ -76,4 +76,4 @@ npm install
 | `browserPath`     | string    | "/usr/bin/chromium-browser"    | Path to Chromium/Chrome for Puppeteer                                       |
 | `tableWidth`      | string    | "100%"                         | CSS width for the table (e.g., "100%", "1200px")                            |
 | `brightText`      | boolean   | false                          | Use bright white text and subtle glow for the table                         |
-| `rowOpacity`      | number    | 0.92                           | Opacity for table rows (0.0–1.0, ignored if `brightText` is true)           |
+| `rowOpacity`      | number    | 0.92                           | Opacity for table rows (0.0–1.0, ignored if `brightText` is `false`)           |
