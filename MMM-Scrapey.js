@@ -96,6 +96,7 @@ Module.register("MMM-Scrapey", {
                 var row = rows[rowIndex - 1];
                 if (row) {
                     var newRow = tbody.insertRow();
+                    newRow.classList.add("scrapey"); // Add class "scrapey" to each new row
                     this.config.tableColumns.forEach((colIndex) => {
                         var cell = row.cells[colIndex - 1];
                         if (cell) {
