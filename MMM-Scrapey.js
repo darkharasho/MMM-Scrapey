@@ -14,8 +14,14 @@ Module.register("MMM-Scrapey", {
         waitForSelector: false, // Wait for selector to appear (for JS-loaded tables)
         browserPath: "/usr/bin/chromium-browser", // Default browser path for puppeteer
         tableWidth: "100%", // <--- Add this line for width preset
-        rowOpacity: null,      // Opacity for table rows (null means no style applied)
-        headerOpacity: null,   // Opacity for table header (null means no style applied)
+        headerStyle: {
+            opacity: null,   // e.g. 1.0
+            color: null      // e.g. "#fff"
+        },
+        rowStyle: {
+            opacity: null,   // e.g. 0.92
+            color: null      // e.g. "#fff"
+        }
     },
 
     start: function () {
@@ -76,8 +82,11 @@ Module.register("MMM-Scrapey", {
                     if (cell) {
                         var th = document.createElement("th");
                         th.innerHTML = cell.innerHTML;
-                        if (this.config.headerOpacity !== null) {
-                            th.style.opacity = this.config.headerOpacity;
+                        if (this.config.headerStyle.opacity !== null) {
+                            th.style.opacity = this.config.headerStyle.opacity;
+                        }
+                        if (this.config.headerStyle.color !== null) {
+                            th.style.color = this.config.headerStyle.color;
                         }
                         headerRow.appendChild(th);
                     }
@@ -95,8 +104,8 @@ Module.register("MMM-Scrapey", {
                 var row = rows[rowIndex - 1];
                 if (row) {
                     var newRow = tbody.insertRow();
-                    if (this.config.rowOpacity !== null) {
-                        newRow.style.opacity = this.config.rowOpacity;
+                    if (this.config.rowStyle.opacity !== null) {
+                        newRow.style.opacity = this.config.rowStyle.opacity;
                     }
                     this.config.tableColumns.forEach((colIndex) => {
                         var cell = row.cells[colIndex - 1];
