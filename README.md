@@ -75,5 +75,5 @@ npm install
 | `waitForSelector` | boolean   | false                          | Wait for selector (for JS-loaded tables, requires Puppeteer)                |
 | `browserPath`     | string    | "/usr/bin/chromium-browser"    | Path to Chromium/Chrome for Puppeteer                                       |
 | `tableWidth`      | string    | "100%"                         | CSS width for the table (e.g., "100%", "1200px")                            |
-| `brightText`      | boolean   | false                          | Use bright white text and subtle glow for the table                         |
-| `rowOpacity`      | number    | 0.92                           | Opacity for table rows (0.0–1.0, ignored if `brightText` is `false`)           |
+| `rowOpacity`      | number\|null | null                        | Opacity for table rows (0.0–1.0, null for no style)                         |
+| `headerOpacity`   | number\|null | null                        | Opacity for table header (0.0–1.0, null for no style)                       |

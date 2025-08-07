@@ -14,8 +14,8 @@ Module.register("MMM-Scrapey", {
         waitForSelector: false, // Wait for selector to appear (for JS-loaded tables)
         browserPath: "/usr/bin/chromium-browser", // Default browser path for puppeteer
         tableWidth: "100%", // <--- Add this line for width preset
-        brightText: false,   // <--- Add this line for bright text option
-        rowOpacity: 0.92, // Default opacity for table rows
+        rowOpacity: null,      // Opacity for table rows (null means no style applied)
+        headerOpacity: null,   // Opacity for table header (null means no style applied)
     },
 
     start: function () {
@@ -60,11 +60,6 @@ Module.register("MMM-Scrapey", {
             // Set table width from config
             filteredTable.style.width = this.config.tableWidth;
 
-            // Apply bright text style if enabled
-            if (this.config.brightText) {
-                filteredTable.style.color = "#fff";
-            }
-
             // Handle header if showTableHeader is true
             if (this.config.showTableHeader) {
                 var thead = filteredTable.createTHead();
@@ -81,6 +76,9 @@ Module.register("MMM-Scrapey", {
                     if (cell) {
                         var th = document.createElement("th");
                         th.innerHTML = cell.innerHTML;
+                        if (this.config.headerOpacity !== null) {
+                            th.style.opacity = this.config.headerOpacity;
+                        }
                         headerRow.appendChild(th);
                     }
                 });
@@ -97,10 +95,8 @@ Module.register("MMM-Scrapey", {
                 var row = rows[rowIndex - 1];
                 if (row) {
                     var newRow = tbody.insertRow();
-                    // Only add opacity class if brightText is false
-                    if (this.config.brightText) {
-                        newRow.classList.add("scrapey-row");
-                        newRow.style.opacity = this.config.rowOpacity; // Set opacity from config
+                    if (this.config.rowOpacity !== null) {
+                        newRow.style.opacity = this.config.rowOpacity;
                     }
                     this.config.tableColumns.forEach((colIndex) => {
                         var cell = row.cells[colIndex - 1];
