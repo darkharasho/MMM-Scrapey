@@ -107,6 +107,9 @@ Module.register("MMM-Scrapey", {
                     if (this.config.rowStyle.opacity !== null) {
                         newRow.style.opacity = this.config.rowStyle.opacity;
                     }
+                    if (this.config.rowStyle.color !== null) {
+                        newRow.style.color = this.config.rowStyle.color;
+                    }
                     this.config.tableColumns.forEach((colIndex) => {
                         var cell = row.cells[colIndex - 1];
                         if (cell) {
